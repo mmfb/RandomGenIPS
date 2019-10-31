@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/', indexRouter);
-app.use('/api/randomNumber',randomNumberRouter);
+app.use('/api/numbers/random',randomNumberRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
