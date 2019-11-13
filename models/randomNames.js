@@ -9,6 +9,7 @@ module.exports.getRandomName = function(callback) {
 }
 
 module.exports.saveName = function(data,callback) {
+    console.log(data);
     names.push(data);
     callback({status:"Ok", currentSize:names.length });   
 }

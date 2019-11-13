@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <p>Name: <input type="text" id="name"></p>
+    <p>Genders (coma separated): <input type="text" id="genders"></p>
+    <p>Types (coma separated): <input type="text" id="types"></p>
+    <p id="msg"></p>
+    <input type="button" value="Add Name" onclick="addName()">
+</body>
+<script>
+    function addName() {
+        var name = document.getElementById("name").value;
+        var genders = document.getElementById("genders").value.split(",");
+        var types = document.getElementById("types").value.split(",");
+        $.ajax({
+            url: "/api/names/random/",
+            method:"post",
+            contentType: "application/json",
+            data: JSON.stringify( {
+                name:name,
+                genders:genders,
+                types:types
+            }),
+            success: function(data,status) {
+                document.getElementById("msg").innerHTML = 
+                    JSON.stringify(data);
+            }
+
+        })   
+        
+
+
+    }
+</script>
+</html>
