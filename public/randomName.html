@@ -5,18 +5,59 @@
 </head>
 <body>
     <p>Name: <input type="text" id="name"></p>
-    <p>Genders (coma separated): <input type="text" id="genders"></p>
-    <p>Types (coma separated): <input type="text" id="types"></p>
+    <p>Genders : <select multiple  id="genders">
+
+    </select></p>
+    <p>Types : <select multiple id="types">
+
+    </select></p>
     <p id="msg"></p>
     <input type="button" value="Add Name" onclick="addName()">
 </body>
 <script>
-    function addName() {
+    $.ajax({
+            url: "/api/names/genders/",
+            method:"get",
+            contentType: "application/json",
+            success: function(genders,status) {
+                var html = ""
+                for(pos in genders)
+                    html += "<option value='"+genders[pos].gender_id+
+                    "'>"+genders[pos].gender_name+"</option>";
+                document.getElementById("genders").innerHTML = html;
+            }
+
+        })
+
+        
+    $.ajax({
+            url: "/api/names/types/",
+            method:"get",
+            contentType: "application/json",
+            success: function(types,status) {
+                var html = ""
+                for(pos in types)
+                    html += "<option value='"+types[pos].type_id+
+                    "'>"+types[pos].type_name+"</option>";
+                document.getElementById("types").innerHTML = html;
+            }
+
+        })
+
+
+function addName() {
         var name = document.getElementById("name").value;
-        var genders = document.getElementById("genders").value.split(",");
-        var types = document.getElementById("types").value.split(",");
+        var genders= [] 
+        var gopts = document.getElementById("genders").selectedOptions;
+        for (var i=0; i < gopts.length; i++) 
+            genders.push(gopts[i].value)
+        var types = []
+        var topts = document.getElementById("types").selectedOptions;
+        for (var i=0; i < topts.length; i++) 
+            types.push(topts[i].value)
+      
         $.ajax({
-            url: "/api/names/random/",
+            url: "/api/names/",
             method:"post",
             contentType: "application/json",
             data: JSON.stringify( {

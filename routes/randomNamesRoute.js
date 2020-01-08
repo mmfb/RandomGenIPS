@@ -3,9 +3,21 @@ var randomNameGen = require('../models/randomNames');
 var router = express.Router();
 
 // Generates one random name 
-router.get('/', function(req, res, next) {
+router.get('/random', function(req, res, next) {
     randomNameGen.getRandomName(function(name) {
         res.send(name);
+    }); 
+});
+
+router.get('/genders', function(req, res, next) {
+    randomNameGen.getGenders(function(genders) {
+        res.send(genders);
+    }); 
+});
+
+router.get('/types', function(req, res, next) {
+    randomNameGen.getTypes(function(types) {
+        res.send(types);
     }); 
 });
 
